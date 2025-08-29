@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { protect, checkRole } from '../middleware/authMiddleware';
 import { Role } from '@prisma/client';
-import { getAllServicesForAdmin, approveService, rejectService, getAllUsers, promoteUserToAdmin } from '../controllers/adminController';
+import { getAllServicesForAdmin, approveService, rejectService, getAllUsers, promoteUserToAdmin, toggleFeaturedStatus, getServiceByIdForAdmin } from '../controllers/adminController';
 
 const router = Router();
 
@@ -14,5 +14,7 @@ router.patch('/services/:id/reject', rejectService);
 
 router.get('/users', getAllUsers);
 router.patch('/users/:id/promote', promoteUserToAdmin);
+router.patch('/services/:id/feature', toggleFeaturedStatus);
+router.get('/services/:id', getServiceByIdForAdmin);
 
 export default router;

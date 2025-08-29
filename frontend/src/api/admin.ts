@@ -41,6 +41,17 @@ export const rejectService = (serviceId: string): Promise<Service> => {
     return adminRequest<Service>(`services/${serviceId}/reject`, { method: 'PATCH' });
 };
 
+export const setFeaturedStatus = ({ serviceId, featured }: { serviceId: string; featured: boolean }): Promise<Service> => {
+    return adminRequest<Service>(`services/${serviceId}/feature`, {
+        method: 'PATCH',
+        body: JSON.stringify({ featured }),
+    });
+};
+
+export const getAdminServiceById = (serviceId: string): Promise<Service> => {
+    return adminRequest<Service>(`services/${serviceId}`);
+};
+
 export const getUsers = (): Promise<User[]> => {
     return adminRequest<User[]>('users');
 };

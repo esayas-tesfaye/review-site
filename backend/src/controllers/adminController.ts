@@ -32,6 +32,57 @@ export const getAllServicesForAdmin = async (req: Request, res: Response) => {
     }
 };
 
+// PATCH /api/admin/services/:id/feature
+export const toggleFeaturedStatus = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const { featured } = req.body; // Expecting { featured: true } or { featured: false }
+
+    if (typeof featured !== 'boolean') {
+        return res.status(400).json({ message: 'Featured status must be a boolean' });
+    }
+
+    try {
+        const updatedService = await prisma.service.update({
+            where: { id },
+            data: { featured },
+        });
+        res.json(updatedService);
+    } catch (error) {
+        console.error(`Admin failed to update featured status for service ${id}:`, error);
+        res.status(500).json({ message: 'Failed to update service' });
+    }
+};
+
+// GET /api/admin/services/:id
+export const getServiceByIdForAdmin = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    try {
+        const service = await prisma.service.findUnique({
+            where: { id },
+            include: {
+                ...includeProvider,
+                reviews: { // You might want to see reviews even if pending
+                    orderBy: { createdAt: 'desc' },
+                    include: {
+                        author: {
+                            select: { id: true, name: true }
+                        }
+                    }
+                }
+            },
+        });
+
+        if (!service) {
+            return res.status(404).json({ message: 'Service not found' });
+        }
+        
+        res.json(transformService(service));
+    } catch (error) {
+        console.error(`Admin failed to get service ${id}:`, error);
+        res.status(500).json({ message: "Failed to retrieve service" });
+    }
+};
+
 // PATCH /api/admin/services/:id/approve
 export const approveService = async (req: Request, res: Response) => {
     const { id } = req.params;

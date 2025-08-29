@@ -31,8 +31,8 @@ export const Header = () => {
                     <div className="h-8 w-8 bg-gradient-to-br from-primary to-primary-glow rounded-lg flex items-center justify-center">
                         <Star className="h-5 w-5 text-primary-foreground" />
                     </div>
-                    <span className="font-bold text-xl">ServiceHub</span>
-                    <Badge variant="secondary" className="ml-2 text-xs">Beta</Badge>
+                    <span className="font-bold text-xl">Ennlite Review</span>
+                    {/* <Badge variant="secondary" className="ml-2 text-xs">+</Badge> */}
                 </Link>
 
                 <div className="hidden md:flex flex-1 max-w-lg mx-8">

@@ -16,6 +16,8 @@ import * as z from 'zod';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from 'sonner';
+import { getAdminServiceById } from '@/api/admin'
+import { Role } from "@/types";
 
 const reviewSchema = z.object({
     rating: z.coerce.number().min(1, "Rating is required").max(5),
@@ -27,12 +29,20 @@ const ServiceDetail = () => {
     const { user, isAuthenticated } = useAuth();
     const queryClient = useQueryClient();
 
+    const isAdmin = user?.role === Role.ADMIN;
+
+    const queryFn = isAdmin 
+    ? () => getAdminServiceById(id!) 
+    : () => getServiceById(id!);
+
+    // Add isAdmin to the queryKey to ensure caches are separate
     const { data: service, isLoading, isError, error } = useQuery({
-        queryKey: ["service", id],
-        queryFn: () => getServiceById(id!),
+        queryKey: ["service", id, { isAdmin }],
+        queryFn: queryFn,
         enabled: !!id,
     });
 
+    
     const form = useForm<z.infer<typeof reviewSchema>>({
         resolver: zodResolver(reviewSchema),
         defaultValues: { rating: 0, comment: "" },

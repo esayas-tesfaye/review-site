@@ -94,7 +94,7 @@ const Index = () => {
           {isLoadingServices ? (
             <LoadingGrid />
           ) : isSiteTotallyEmpty ? (
-            <EmptyState Icon={PackageOpen} title="Welcome to ServiceHub!" description="No services have been listed yet. If you are a provider, list your service to be the first!"/>
+            <EmptyState Icon={PackageOpen} title="Welcome to Ennlite Review!" description="No services have been listed yet. If you are a provider, list your service to be the first!"/>
           ) : services && services.length > 0 ? (
             <ServiceGrid services={services} />
           ) : (
