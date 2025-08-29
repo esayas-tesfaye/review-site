@@ -1,0 +1,47 @@
+# Dependency directories
+node_modules/
+**/node_modules/
+
+# Build output
+dist/
+**/dist/
+
+# Lockfiles
+bun.lockb
+package-lock.json
+**/package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Environment variables (examples should be committed)
+.env
+**/.env
+**/.env.*
+!**/.env.example
+
+# IDE and OS files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Caches
+.eslintcache
+*.tsbuildinfo
+
+# Uploads from backend
+/backend/uploads/
+
+# User-specific tooling files
+From_Google_AI/
+.extractor_state.json
+combined_output.txt
+**/combined_output.txt
+.combinerignore
