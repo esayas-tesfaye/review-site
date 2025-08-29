@@ -56,10 +56,14 @@ export const createReview = async (req: AuthRequest, res: Response) => {
                 _count: { id: true },
             });
 
+            const averageRating = aggregate._avg.rating || 0;
+            // Round the average rating to one decimal place
+            const roundedRating = Math.round(averageRating * 10) / 10;
+
             await tx.service.update({
                 where: { id: serviceId },
                 data: {
-                    rating: aggregate._avg.rating || 0,
+                    rating: roundedRating,
                     reviewCount: aggregate._count.id,
                 },
             });
